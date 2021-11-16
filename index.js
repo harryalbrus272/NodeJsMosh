@@ -7,9 +7,15 @@ console.log(_.contains([1, 2, 3], 3));
 //
 const Joi = require("joi");
 const express = require("express");
+const log = require("./logger");
 const app = express();
 //express.json middleware
 app.use(express.json());
+//Custom middleware function
+/** Middleware functions are called in order they are passed to the app
+ * 
+ */
+app.use(log);
 require("dotenv").config();
 const PORT = process.env.PORT;
 const courses = [
