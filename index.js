@@ -52,9 +52,8 @@ app.post("/api/courses", async (req, res) => {
 app.put("/api/courses/:id", (req, res) => {
   const course = courses.find((c) => c.id === parseInt(req.params.id));
   if (!course) res.status(404).send("The course not found");
-  res.status(200).send(course);
-
-  const result = await schema.validate(req.body);
+  
+  const result = schema.validate(req.body);
 
   if (!result.error) {
     course.name = req.body.name;
