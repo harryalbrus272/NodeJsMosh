@@ -33,15 +33,39 @@ app.get("/api/courses", (req, res) => {
 
 app.post("/api/courses", async (req, res) => {
   const result = await schema.validate(req.body);
-  if (!result.error) {
+  console.log(result);
+  const error = result;
+  if (!error) {
     const course = { id: courses.length + 1, name: req.body.name };
     courses.push(course);
     return res.status(200).send(course);
   } else {
-      //Bad request
+    //Bad request
+    const [details] = error.details;
+    console.log(details.message);
     return res
-    .status(400)
-    .send("Name is required and should be a minimum of 3 characters");
+      .status(400)
+      .send("Name is required and should be a minimum of 3 characters");
+  }
+});
+
+app.put("/api/courses/:id", (req, res) => {
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course) res.status(404).send("The course not found");
+  res.status(200).send(course);
+
+  const result = await schema.validate(req.body);
+
+  if (!result.error) {
+    course.name = req.body.name;
+    return res.status(200).send(course);
+  } else {
+    //Bad request
+    const [details] = result.error.details;
+    console.log(details.message);
+    return res
+      .status(400)
+      .send("Name is required and should be a minimum of 3 characters");
   }
 });
 
