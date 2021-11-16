@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/courses", (req, res) => {
-  res.send([1, 2, 3]);
+  res.send(courses);
 });
 
 app.post("/api/courses", async (req, res) => {
@@ -52,7 +52,7 @@ app.post("/api/courses", async (req, res) => {
 app.put("/api/courses/:id", (req, res) => {
   const course = courses.find((c) => c.id === parseInt(req.params.id));
   if (!course) res.status(404).send("The course not found");
-  
+
   const result = schema.validate(req.body);
 
   if (!result.error) {
@@ -66,6 +66,15 @@ app.put("/api/courses/:id", (req, res) => {
       .status(400)
       .send("Name is required and should be a minimum of 3 characters");
   }
+});
+
+app.delete("/api/courses/:id", (req, res) => {
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course) res.status(404).send("The course not found");
+
+  const index = courses.indexOf(course);
+  courses.splice(index, 1);
+  res.status(200).send(course);
 });
 
 //Route parameter
