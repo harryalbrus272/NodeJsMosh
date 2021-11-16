@@ -25,5 +25,5 @@ app.get("/api/courses", (req, res) => {
 // app.delete();
 
 app.listen(PORT, () => {
-  console.log("Listening on port 3050");
+  console.log(`Listening on port: ${PORT}`);
 });
