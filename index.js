@@ -10,6 +10,11 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT;
+const courses = [
+  { id: 1, name: "course1" },
+  { id: 2, name: "course2" },
+  { id: 3, name: "course3" },
+];
 console.log(PORT);
 
 app.get("/", (req, res) => {
@@ -20,10 +25,15 @@ app.get("/api/courses", (req, res) => {
   res.send([1, 2, 3]);
 });
 
+app.post("/api/courses", (req, res) => {});
+
 //Route parameter
 /** Query string params are also used using req.query  */
-app.get("api/courses/:id/:year", (req, res) => {
-  res.send(req.params.id, req.params.year);
+app.get("/api/courses/:id", (req, res) => {
+  //res.send(req.params.id, req.params.year);
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course) res.status(404).send("The course not found");
+  res.status(200).send(course);
 });
 
 // app.post();
