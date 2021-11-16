@@ -11,9 +11,11 @@ const log = require("./logger");
 const app = express();
 //express.json middleware
 app.use(express.json());
+//in-built middleware
+app.use(express.urlencoded());
 //Custom middleware function
 /** Middleware functions are called in order they are passed to the app
- * 
+ *
  */
 app.use(log);
 require("dotenv").config();
