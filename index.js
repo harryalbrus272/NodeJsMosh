@@ -12,11 +12,11 @@ const app = express();
 //express.json middleware
 app.use(express.json());
 //in-built middleware
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
+//static assets in this folder
+app.use(express.static("public"));
 //Custom middleware function
-/** Middleware functions are called in order they are passed to the app
- *
- */
+/** Middleware functions are called in order they are passed to the app */
 app.use(log);
 require("dotenv").config();
 const PORT = process.env.PORT;
