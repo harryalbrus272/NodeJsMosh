@@ -20,6 +20,12 @@ app.get("/api/courses", (req, res) => {
   res.send([1, 2, 3]);
 });
 
+//Route parameter
+/** Query string params are also used using req.query  */
+app.get("api/courses/:id/:year", (req, res) => {
+  res.send(req.params.id, req.params.year);
+});
+
 // app.post();
 // app.put();
 // app.delete();
