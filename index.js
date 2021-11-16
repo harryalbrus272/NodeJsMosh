@@ -8,6 +8,8 @@ console.log(_.contains([1, 2, 3], 3));
 
 const express = require("express");
 const app = express();
+//express.json middleware
+app.use(express.json());
 require("dotenv").config();
 const PORT = process.env.PORT;
 const courses = [
@@ -25,7 +27,11 @@ app.get("/api/courses", (req, res) => {
   res.send([1, 2, 3]);
 });
 
-app.post("/api/courses", (req, res) => {});
+app.post("/api/courses", (req, res) => {
+  const course = { id: courses.length + 1, name: req.body.name };
+  courses.push(course);
+  res.status(200).send(course);
+});
 
 //Route parameter
 /** Query string params are also used using req.query  */
