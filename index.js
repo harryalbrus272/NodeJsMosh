@@ -4,7 +4,9 @@ const _ = require("underscore");
 // File or Folder
 // node_modules
 console.log(_.contains([1, 2, 3], 3));
-//
+
+const helmet = require('helmet');
+const morgan = require('morgan');
 const Joi = require("joi");
 const express = require("express");
 const log = require("./logger");
@@ -16,6 +18,11 @@ app.use(express.urlencoded({ extended: true }));
 //static assets in this folder
 app.use(express.static("public"));
 //Custom middleware function
+
+//Third -party middlewares
+app.use(helmet());
+app.use(morgan('tiny'));
+
 /** Middleware functions are called in order they are passed to the app */
 app.use(log);
 require("dotenv").config();
