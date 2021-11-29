@@ -1,5 +1,5 @@
 //Major.Minor.Patch
-const _ = require("underscore");
+const _ = require('underscore');
 // Core Modules
 // File or Folder
 // node_modules
@@ -7,30 +7,35 @@ console.log(_.contains([1, 2, 3], 3));
 
 const helmet = require('helmet');
 const morgan = require('morgan');
-const Joi = require("joi");
-const express = require("express");
-const log = require("./logger");
+const Joi = require('joi');
+const express = require('express');
+const log = require('./logger');
 const app = express();
 //express.json middleware
 app.use(express.json());
 //in-built middleware
 app.use(express.urlencoded({ extended: true }));
 //static assets in this folder
-app.use(express.static("public"));
+app.use(express.static('public'));
 //Custom middleware function
 
 //Third -party middlewares
 app.use(helmet());
-app.use(morgan('tiny'));
 
+console.log(`Node environment: ${process.env.NODE_ENV}`); //development, testing, staging and production
+console.log(`Environment in which the app is running: ${app.get('env')}`);
 /** Middleware functions are called in order they are passed to the app */
+if (app.get('env' === 'development')) {
+  app.use(morgan('tiny'));
+  console.log('Morgan logging');
+}
 app.use(log);
-require("dotenv").config();
+require('dotenv').config();
 const PORT = process.env.PORT;
 const courses = [
-  { id: 1, name: "course1" },
-  { id: 2, name: "course2" },
-  { id: 3, name: "course3" },
+  { id: 1, name: 'course1' },
+  { id: 2, name: 'course2' },
+  { id: 3, name: 'course3' },
 ];
 
 const schema = Joi.object({
@@ -38,15 +43,15 @@ const schema = Joi.object({
 });
 console.log(PORT);
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+app.get('/', (req, res) => {
+  res.send('Hello World');
 });
 
-app.get("/api/courses", (req, res) => {
+app.get('/api/courses', (req, res) => {
   res.send(courses);
 });
 
-app.post("/api/courses", async (req, res) => {
+app.post('/api/courses', async (req, res) => {
   const result = await schema.validate(req.body);
   console.log(result);
   const error = result;
@@ -60,13 +65,13 @@ app.post("/api/courses", async (req, res) => {
     console.log(details.message);
     return res
       .status(400)
-      .send("Name is required and should be a minimum of 3 characters");
+      .send('Name is required and should be a minimum of 3 characters');
   }
 });
 
-app.put("/api/courses/:id", (req, res) => {
+app.put('/api/courses/:id', (req, res) => {
   const course = courses.find((c) => c.id === parseInt(req.params.id));
-  if (!course) res.status(404).send("The course not found");
+  if (!course) res.status(404).send('The course not found');
 
   const result = schema.validate(req.body);
 
@@ -79,13 +84,13 @@ app.put("/api/courses/:id", (req, res) => {
     console.log(details.message);
     return res
       .status(400)
-      .send("Name is required and should be a minimum of 3 characters");
+      .send('Name is required and should be a minimum of 3 characters');
   }
 });
 
-app.delete("/api/courses/:id", (req, res) => {
+app.delete('/api/courses/:id', (req, res) => {
   const course = courses.find((c) => c.id === parseInt(req.params.id));
-  if (!course) res.status(404).send("The course not found");
+  if (!course) res.status(404).send('The course not found');
 
   const index = courses.indexOf(course);
   courses.splice(index, 1);
@@ -94,10 +99,10 @@ app.delete("/api/courses/:id", (req, res) => {
 
 //Route parameter
 /** Query string params are also used using req.query  */
-app.get("/api/courses/:id", (req, res) => {
+app.get('/api/courses/:id', (req, res) => {
   //res.send(req.params.id, req.params.year);
   const course = courses.find((c) => c.id === parseInt(req.params.id));
-  if (!course) res.status(404).send("The course not found");
+  if (!course) res.status(404).send('The course not found');
   res.status(200).send(course);
 });
 
