@@ -25,7 +25,7 @@ app.use(helmet());
 console.log(`Node environment: ${process.env.NODE_ENV}`); //development, testing, staging and production
 console.log(`Environment in which the app is running: ${app.get('env')}`);
 /** Middleware functions are called in order they are passed to the app */
-if (app.get('env' === 'development')) {
+if (app.get('env') === 'development') {
   app.use(morgan('tiny'));
   console.log('Morgan logging');
 }
