@@ -10,6 +10,7 @@ const morgan = require('morgan');
 const Joi = require('joi');
 const express = require('express');
 const log = require('./logger');
+const config = require('config');
 const app = express();
 //express.json middleware
 app.use(express.json());
@@ -21,6 +22,10 @@ app.use(express.static('public'));
 
 //Third -party middlewares
 app.use(helmet());
+
+//Configuration - We can use npm rc package. But the config is better to store the configurations
+console.log('Application Name: ', config.get('name'));
+console.log('Mail Server: ', config.get('mail.host'));
 
 console.log(`Node environment: ${process.env.NODE_ENV}`); //development, testing, staging and production
 console.log(`Environment in which the app is running: ${app.get('env')}`);
