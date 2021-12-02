@@ -11,6 +11,9 @@ const Joi = require('joi');
 const express = require('express');
 const log = require('./logger');
 const config = require('config');
+/** The name space is passed in the environment variables. You can use the wildcard a app.* to select the namespace */
+const startDebugger = require('debug')('app:startup'); //arbitary name space in the argument
+const dbDebugger = require('debug')('app:db');
 const app = express();
 //express.json middleware
 app.use(express.json());
@@ -32,8 +35,11 @@ console.log(`Environment in which the app is running: ${app.get('env')}`);
 /** Middleware functions are called in order they are passed to the app */
 if (app.get('env') === 'development') {
   app.use(morgan('tiny'));
-  console.log('Morgan logging');
+  startDebugger('Morgan logging');
 }
+
+dbDebugger('Connected to the Database');
+
 app.use(log);
 require('dotenv').config();
 const PORT = process.env.PORT;
