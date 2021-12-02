@@ -26,7 +26,7 @@ app.use(helmet());
 //Configuration - We can use npm rc package. But the config is better to store the configurations
 console.log('Application Name: ', config.get('name'));
 console.log('Mail Server: ', config.get('mail.host'));
-
+console.log('Mail Password: ', config.get('mail.password'));
 console.log(`Node environment: ${process.env.NODE_ENV}`); //development, testing, staging and production
 console.log(`Environment in which the app is running: ${app.get('env')}`);
 /** Middleware functions are called in order they are passed to the app */
