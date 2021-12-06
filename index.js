@@ -8,7 +8,7 @@ console.log(_.contains([1, 2, 3], 3));
 const helmet = require('helmet');
 const morgan = require('morgan');
 const express = require('express');
-const log = require('./logger');
+const log = require('./middleware/logger');
 const config = require('config');
 const courseRoute = require('./routes/courses');
 const homeRoute = require('./routes/home');
