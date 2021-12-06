@@ -19,8 +19,7 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
   const result = await schema.validate(req.body);
-  console.log(result);
-  const error = result;
+  const { error } = result;
   if (!error) {
     const course = { id: genres.length + 1, name: req.body.name };
     genres.push(course);
@@ -29,9 +28,7 @@ router.post('/', async (req, res) => {
     //Bad request
     const [details] = error.details;
     console.log(details.message);
-    return res
-      .status(400)
-      .send('Genres\' name is required');
+    return res.status(400).send("Genres' name is required");
   }
 });
 
@@ -48,9 +45,7 @@ router.put('/:id', (req, res) => {
     //Bad request
     const [details] = result.error.details;
     console.log(details.message);
-    return res
-      .status(400)
-      .send('Genres\'name is required');
+    return res.status(400).send("Genres'name is required");
   }
 });
 
