@@ -10,8 +10,9 @@ const morgan = require('morgan');
 const express = require('express');
 const log = require('./middleware/logger');
 const config = require('config');
-const courseRoute = require('./routes/courses');
 const homeRoute = require('./routes/home');
+const courseRoute = require('./routes/courses');
+const genresRoute = require('./routes/genres');
 /** The name space is passed in the environment variables. You can use the wildcard a app.* to select the namespace */
 const startDebugger = require('debug')('app:startup'); //arbitary name space in the argument
 const dbDebugger = require('debug')('app:db');
@@ -27,8 +28,9 @@ app.use(express.static('public'));
 //Third -party middlewares
 app.use(helmet());
 
-app.use('/api/courses', courseRoute);
 app.use('/', homeRoute);
+app.use('/api/courses', courseRoute);
+app.use('/api/genres', genresRoute);
 //Configuration - We can use npm rc package. But the config is better to store the configurations
 console.log('Application Name: ', config.get('name'));
 console.log('Mail Server: ', config.get('mail.host'));
