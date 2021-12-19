@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
+const Genre = require('../../models/index');
 
 const schema = Joi.object({
   name: Joi.string().required(),
@@ -13,7 +14,8 @@ const genres = [
   { id: 4, name: 'Biopic' },
 ];
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  const genres = await Genre.find({}).sort('name');
   res.send(genres);
 });
 
@@ -21,9 +23,9 @@ router.post('/', async (req, res) => {
   const result = await schema.validate(req.body);
   const { error } = result;
   if (!error) {
-    const course = { id: genres.length + 1, name: req.body.name };
-    genres.push(course);
-    return res.status(200).send(course);
+    let genres = new Genre({ name: req.body.name });
+    genres = await genres.save();
+    return res.status(200).send(genres);
   } else {
     //Bad request
     const [details] = error.details;
@@ -32,15 +34,16 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
-  const course = genres.find((c) => c.id === parseInt(req.params.id));
-  if (!course) res.status(404).send('The course not found');
-
+router.put('/:id', async (req, res) => {
   const result = schema.validate(req.body);
-
   if (!result.error) {
-    course.name = req.body.name;
-    return res.status(200).send(course);
+    const genre = await Genre.findByIdAndUpdate(
+      req.params.id,
+      { name: req.body.name },
+      { new: true }
+    );
+    if (!genre) res.status(404).send('The genre not found');
+    return res.status(200).send(genre);
   } else {
     //Bad request
     const [details] = result.error.details;
@@ -49,21 +52,18 @@ router.put('/:id', (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
-  const course = genres.find((c) => c.id === parseInt(req.params.id));
-  if (!course) res.status(404).send('The course not found');
-
-  const index = genres.indexOf(course);
-  genres.splice(index, 1);
-  res.status(200).send(course);
+router.delete('/:id', async (req, res) => {
+  const genre = await Genre.findByIdAndRemove(req.params.id);
+  if (!genre) return res.status(404).send('The genre not found');
+  res.status(200).send(genre);
 });
 
 //Route parameter
 /** Query string params are also used using req.query  */
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   //res.send(req.params.id, req.params.year);
-  const course = genres.find((c) => c.id === parseInt(req.params.id));
-  if (!course) res.status(404).send('The course not found');
-  res.status(200).send(course);
+  const genre = await Genre.findById(req.params.id);
+  if (!genre) return res.status(404).send('The genre not found');
+  res.status(200).send(genre);
 });
 module.exports = router;
