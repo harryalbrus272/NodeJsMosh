@@ -8,12 +8,17 @@ console.log(_.contains([1, 2, 3], 3));
 const helmet = require('helmet');
 const morgan = require('morgan');
 const express = require('express');
+const mongoose = require('mongoose');
 const log = require('./middleware/logger');
 const config = require('config');
 /** The name space is passed in the environment variables. You can use the wildcard a app.* to select the namespace */
 const startDebugger = require('debug')('app:startup'); //arbitary name space in the argument
 const dbDebugger = require('debug')('app:db');
 const app = express();
+mongoose
+  .connect('mongodb://localhost/vidly')
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.log('Could not connect to mongodb', err));
 //express.json middleware
 app.use(express.json());
 //in-built middleware
