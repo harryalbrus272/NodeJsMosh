@@ -80,4 +80,4 @@ const Customer = mongoose.model(
   })
 );
 
-module.exports = { Genre, Customer };
+module.exports = { Genre, Customer, Movie, genreSchema,  validateGenre, validateMovies};
