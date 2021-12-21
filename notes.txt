@@ -1,0 +1,28 @@
+Two approaches in modelling relationships in MongoDB are
+1. Using Reference (Normalization) consistency friendly
+    let author = {
+        name: "Mosh"
+    }
+    //No relationship between ids passed in the document
+    let course = {
+        author: 'id',
+    }
+2. Using Embedded Documents (Denormalization) performance friendly
+let course = {
+    author: {
+        name: 'Mosh'
+    }
+}
+Trade off between query performance vs consistency
+
+//Hybrid
+let author = {
+    name: 'Mosh'
+    //Other properties
+}
+let course = {
+    author: {
+        id: 'ref',
+        name: 'Mosh'
+    }
+}
