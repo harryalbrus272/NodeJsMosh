@@ -99,7 +99,7 @@ const Rental = mongoose.model('Rental', new mongoose.Schema({
   dateOut: {
     type: Date,
     required: true,
-    default: Date.now
+    default: Date.now()
   },
   dateReturned: {
     type: Date
