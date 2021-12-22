@@ -156,7 +156,7 @@ const User = mongoose.model(
       minlength: 5,
       maxlength: 50,
     },
-    emails: {
+    email: {
       type: String,
       required: true,
       minlength: 5,
@@ -172,7 +172,7 @@ const User = mongoose.model(
   })
 );
 
-const validateUser = (user) => {
+function validateUser (user) {
   const schema = Joi.object({
     name: Joi.string().min(5).max(50).required(),
     email: Joi.string().min(5).max(255).email().required(),
