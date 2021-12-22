@@ -41,4 +41,10 @@ Object Id - The way to understand what each object id means
 // 256 characters
 2 ^ 24 = 16M
 
+const mongoose = require('mongoose');
+const id = mongoose.Types.ObjectId();
+console.log(id); // id of the document
+console.log(id.getTimestamp()); //returns the time of creation of the document
+Checking the validity of the document Id mongoose.Types.ObjectId().isValid();
+
 //Driver -> MongoDB Can generate a almost unique identifier for the object. No need to talk to a central place.
