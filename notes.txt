@@ -26,3 +26,19 @@ let course = {
         name: 'Mosh'
     }
 }
+
+// TODO: Learn about 2 phase commit transactions
+
+Object Id - The way to understand what each object id means
+61bf104b6c49093b53523ed5
+12 bytes
+    1. 4 bytes: timestamp
+    2. 3 bytes: machine identifier
+    3. 2 bytes: process identifier
+    4. 3 bytes: counter
+
+//1 byte = 8 bits
+// 256 characters
+2 ^ 24 = 16M
+
+//Driver -> MongoDB Can generate a almost unique identifier for the object. No need to talk to a central place.
