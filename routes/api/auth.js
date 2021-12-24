@@ -16,7 +16,9 @@ router.post('/', async (req, res) => {
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if(!validPassword) return res.status(400).send('Invalid email and password');
 
-  return res.send(validPassword);
+  const token = user.generateAuthToken();
+
+  return res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 });
 
 function validate(req) {
@@ -26,5 +28,7 @@ function validate(req) {
   });
   return schema.validate(req);
 }
+
+//Information Expert Principle
 
 module.exports = router;

@@ -3,7 +3,13 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const express = require('express');
+const auth = require('../../middleware/auth');
 const router = express.Router();
+
+router.get('/me', auth, async (req, res) => {
+    const user = await User.findById(req.user._id).select('-password');
+    res.send(user);
+});
 
 router.post('/', async (req, res) => {
   const { error } = validateUser(req.body);
@@ -22,7 +28,9 @@ router.post('/', async (req, res) => {
   });
 
   await user.save();
-  res.status(200).send(_.pick(user, ['name', 'email', '_id']));
+
+  const token = user.generateAuthToken();
+  return res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 });
 
 module.exports = router;
