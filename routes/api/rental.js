@@ -4,6 +4,7 @@ const { Customer } = require('../../models');
 const express = require('express');
 const router = express.Router();
 const Fawn = require('fawn');
+const auth = require('../../middleware/auth');
 Fawn.init('mongodb://127.0.0.1:27017/vidly');
 
 router.get('/', async (req, res) => {
