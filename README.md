@@ -17,7 +17,8 @@ Steps to setup the project locally:
 3. Run 
    ```bash
    npm i
-   ``` or 
+   ```
+   or 
    ```bash
    npm install
    ```
