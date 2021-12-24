@@ -17,8 +17,13 @@ const genres = [
 ];
 
 router.get('/', async (req, res) => {
-  const genres = await Genre.find({}).sort('name');
-  res.send(genres);
+  try {
+    const genres = await Genre.find({}).sort('name');
+    return res.send(genres);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Something wrong with the server');
+  }
 });
 
 router.post('/', auth, async (req, res) => {
