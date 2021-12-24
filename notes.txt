@@ -48,3 +48,4 @@ console.log(id.getTimestamp()); //returns the time of creation of the document
 Checking the validity of the document Id mongoose.Types.ObjectId().isValid();
 
 //Driver -> MongoDB Can generate a almost unique identifier for the object. No need to talk to a central place.
+joi-password-complexity to check the package to check the complexity of the passwords entered.
