@@ -16,13 +16,12 @@ const genres = [
   { id: 4, name: 'Biopic' },
 ];
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const genres = await Genre.find({}).sort('name');
     return res.send(genres);
   } catch (error) {
-    console.log(error.message);
-    res.status(500).send('Something wrong with the server');
+    next(error);
   }
 });
 

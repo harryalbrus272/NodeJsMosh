@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const express = require('express');
 const mongoose = require('mongoose');
+const error = require('./middleware/error');
 const log = require('./middleware/logger');
 const config = require('config');
 /** The name space is passed in the environment variables. You can use the wildcard a app.* to select the namespace */
@@ -30,6 +31,8 @@ app.use(express.static('public'));
 //Third -party middlewares
 app.use(helmet());
 app.use('/', require('./routes'));
+//Error middleware in-built provided by express
+app.use(error);
 //Configuration - We can use npm rc package. But the config is better to store the configurations
 console.log('Application Name: ', config.get('name'));
 console.log('Mail Server: ', config.get('mail.host'));
