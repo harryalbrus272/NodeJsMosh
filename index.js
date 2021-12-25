@@ -29,6 +29,12 @@ winston.add(
 );
 
 const app = express();
+
+process.on('uncaughtException', (err) => {
+  console.log('WE GOT AN UNCAUGHT EXCEPTION', err);
+  winston.error(err.message, err);
+});
+
 mongoose
   .connect('mongodb://localhost/vidly')
   .then(() => console.log('Connected to MongoDB'))
