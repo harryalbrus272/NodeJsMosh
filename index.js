@@ -15,6 +15,7 @@ const log = require('./middleware/logger');
 require('express-async-errors');
 //Logger for logging out errors
 const winston = require('winston');
+require('winston-mongodb');
 const config = require('config');
 /** The name space is passed in the environment variables. You can use the wildcard a app.* to select the namespace */
 const startDebugger = require('debug')('app:startup'); //arbitary name space in the argument
