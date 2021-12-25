@@ -54,3 +54,7 @@ JWT has 3 parts :- Header - {algorithm, typeOfToken: 'jwt'}
                    Payload- {sub: userID, name, admin:true/false} //Public properties in this section
                    Verify Signature - {} Digital Signature based on the content of the payload with a secret key.
                    Without this key, we will be able to decode the data.
+
+Winston logger comes with transports - storage device for our logs
+Console, File, HTTP transports 
+There are plugins to log to the MongoDB, CouchDB, Redis, Loggly
