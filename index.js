@@ -11,6 +11,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const error = require('./middleware/error');
 const log = require('./middleware/logger');
+//monkey-patch all the async route handlers
+require('express-async-errors');
 const config = require('config');
 /** The name space is passed in the environment variables. You can use the wildcard a app.* to select the namespace */
 const startDebugger = require('debug')('app:startup'); //arbitary name space in the argument
