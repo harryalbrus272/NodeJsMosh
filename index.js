@@ -19,6 +19,9 @@ const config = require('config');
 /** The name space is passed in the environment variables. You can use the wildcard a app.* to select the namespace */
 const startDebugger = require('debug')('app:startup'); //arbitary name space in the argument
 const dbDebugger = require('debug')('app:db');
+
+winston.add(new winston.transports.File({filename: 'logfile.log'}));
+
 const app = express();
 mongoose
   .connect('mongodb://localhost/vidly')
