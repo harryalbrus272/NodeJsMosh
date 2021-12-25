@@ -21,7 +21,12 @@ const config = require('config');
 const startDebugger = require('debug')('app:startup'); //arbitary name space in the argument
 const dbDebugger = require('debug')('app:db');
 
-winston.add(new winston.transports.File({filename: 'logfile.log'}));
+winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.add(
+  new winston.transports.MongoDB({
+    db: 'mongodb://localhost/vidly',
+  }),
+);
 
 const app = express();
 mongoose
