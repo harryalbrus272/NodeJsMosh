@@ -20,7 +20,7 @@ const Course = mongoose.model(
     authors: {
       type: [authorSchema],
     },
-  })
+  }),
 );
 
 async function createCourse(name, authors) {
@@ -56,7 +56,7 @@ async function updateAuthor(courseId) {
         'author.name': 'John Smith',
       },
     },
-    { new: true }
+    { new: true },
   );
   console.log(course);
 }
