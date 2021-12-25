@@ -43,16 +43,19 @@ router.post('/', auth, async (req, res) => {
   //   movie.save();
 
   try {
-    await new Fawn.Task().save('rentals', rental).update(
-      'movies',
-      { _id: movie._id },
-      {
-        $inc: { numberInStock: -1 },
-      }
-    ).run();
+    await new Fawn.Task()
+      .save('rentals', rental)
+      .update(
+        'movies',
+        { _id: movie._id },
+        {
+          $inc: { numberInStock: -1 },
+        },
+      )
+      .run();
   } catch (error) {
     console.log('Error in updating the movies: ', error);
-    res.status(500),send('Something failed on our side');
+    res.status(500), send('Something failed on our side');
   }
 
   res.send(rental);

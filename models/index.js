@@ -45,7 +45,7 @@ const Movie = mongoose.model(
       min: 0,
       max: 255,
     },
-  })
+  }),
 );
 
 function validateMovies(movie) {
@@ -112,7 +112,7 @@ const Rental = mongoose.model(
       type: Number,
       min: 0,
     },
-  })
+  }),
 );
 
 function validateRental(rental) {
@@ -145,7 +145,7 @@ const Customer = mongoose.model(
       max: 9999999999,
       maxlength: 10,
     },
-  })
+  }),
 );
 
 const userSchema = new mongoose.Schema({
@@ -168,11 +168,14 @@ const userSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 1024,
   },
-  isAdmin: Boolean
+  isAdmin: Boolean,
 });
 
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, process.env.JWTKEY);
+  const token = jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin },
+    process.env.JWTKEY,
+  );
   return token;
 };
 
