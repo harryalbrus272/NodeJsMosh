@@ -18,7 +18,11 @@ router.post('/', async (req, res) => {
   const result = await schema.validate(req.body);
   const { error } = result;
   if (!error) {
-    let customers = new Customer({ name: req.body.name, phoneNumber: req.body.phoneNumber, isGold: req.body.isGold });
+    let customers = new Customer({
+      name: req.body.name,
+      phoneNumber: req.body.phoneNumber,
+      isGold: req.body.isGold,
+    });
     customers = await customers.save();
     return res.status(200).send(customers);
   } else {
@@ -35,7 +39,7 @@ router.put('/:id', async (req, res) => {
     const genre = await Customer.findByIdAndUpdate(
       req.params.id,
       { name: req.body.name },
-      { new: true }
+      { new: true },
     );
     if (!genre) res.status(404).send('The genre not found');
     return res.status(200).send(genre);

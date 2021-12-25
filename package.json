@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production app_password=1234 DEBUG=app:* node index.js",
-    "dev": "NODE_ENV=development app_password=1234 DEBUG=app.startup,app:db nodemon index.js"
+    "dev": "NODE_ENV=development app_password=1234 DEBUG=app.startup,app:db nodemon index.js",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",
