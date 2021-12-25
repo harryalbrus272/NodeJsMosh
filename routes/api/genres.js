@@ -18,7 +18,7 @@ const genres = [
 
 router.get('/', async (req, res) => {
   const genres = await Genre.find({}).sort('name');
-  res.send(genres);
+  return res.send(genres);
 });
 
 router.post('/', auth, async (req, res) => {
