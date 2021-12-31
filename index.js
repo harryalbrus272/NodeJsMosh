@@ -21,19 +21,32 @@ const config = require('config');
 const startDebugger = require('debug')('app:startup'); //arbitary name space in the argument
 const dbDebugger = require('debug')('app:db');
 
-winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.add(
+  new winston.transports.File({
+    filename: 'logfile.log',
+    handleExceptions: true,
+    handleRejections: true,
+  }),
+);
 winston.add(
   new winston.transports.MongoDB({
     db: 'mongodb://localhost/vidly',
+    handleExceptions: true,
+    handleRejections: true,
   }),
 );
 
 const app = express();
 
-process.on('uncaughtException', (err) => {
-  console.log('WE GOT AN UNCAUGHT EXCEPTION', err);
-  winston.error(err.message, err);
-});
+// process.on('uncaughtException', (err) => {
+//   winston.error(err.message, err);
+//   process.exit(1);
+// });
+
+// process.on('unhandledRejection', (err) => {
+//   winston.error(err.message, err);
+//   process.exit(1);
+// });
 
 mongoose
   .connect('mongodb://localhost/vidly')
@@ -65,6 +78,7 @@ if (app.get('env') === 'development') {
 }
 
 dbDebugger('Connected to the Database');
+
 
 app.use(log);
 require('dotenv').config();
