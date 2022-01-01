@@ -27,12 +27,12 @@ describe('Greet', () => {
 describe('getCurrencies', () => {
   it('-should return supported currencies', () => {
     const result = lib.getCurrencies();
-    
+
     //Too general - number will also pass
     expect(result).toBeDefined();
     expect(result).not.toBeNull();
 
-    //Proper Way 
+    //Proper Way
     expect(result).toContain('USD');
     expect(result).toContain('AUD');
     expect(result).toContain('EUR');
@@ -43,8 +43,19 @@ describe('getCurrencies', () => {
     expect(result[2]).toBe('EUR');
     expect(result.length).toBe(3);
 
-
     //Ideal Way
     expect(result).toEqual(expect.arrayContaining(['USD', 'EUR', 'AUD']));
+  });
+});
+
+describe('getProduct', () => {
+  it('-should return the product with the given id', () => {
+    const result = lib.getProduct(1);
+    // For exact matches
+    //expect(result).toEqual({ id: 1, price: 10 });
+    // For bigger objects - will pass as long as it contains the two properties
+    expect(result).toMatchObject({ id: 1, price: 10});
+    // to have particulat properties
+    expect(result).toHaveProperty('id', 1);
   });
 });
