@@ -11,6 +11,13 @@ module.exports = function () {
       handleExceptions: true,
       handleRejections: true,
     }),
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple(),
+        winston.format.prettyPrint(),
+      ),
+    }),
   );
   process.on('uncaughtException', (err) => {
     winston.error(err.message, err);
