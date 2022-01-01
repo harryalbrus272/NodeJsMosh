@@ -58,3 +58,19 @@ JWT has 3 parts :- Header - {algorithm, typeOfToken: 'jwt'}
 Winston logger comes with transports - storage device for our logs
 Console, File, HTTP transports 
 There are plugins to log to the MongoDB, CouchDB, Redis, Loggly
+
+What is Automated Testing - Practice of writing code to test our code, and then run those tests in an automated fashion.
+Code comprises of - 1. Production code 2. Test code
+Automated test are repeatable
+Benefits of automated testing 
+1. Test yout code frequently, in less time
+2. Catch bugs before deploying
+3. Deploy with more confidence
+4. Refactor with more confidence
+5. Focus more on the quality
+Disclaimer - You can just reduce the bugs, not produce a bug-free software.
+Refactoring means changing the structure of the code without changing its behaviour.
+Types of tests -
+1. Unit tests - Test a unit of an applications without its external dependencies. Cheap to write and they execute fast. Can't get a lot of confidence.
+2. Integration tests - Test a few unit of an applications with its external dependencies. Files, databases, etc. Take longer to execute. Give more confidence.
+3. End-to-end tests - 
