@@ -94,14 +94,23 @@ describe('applyDiscount', () => {
 
 describe('notifyCustomer', () => {
   it('-should sent an email to the customer', () => {
-    db.getCustomerSync = function () {
-      return { email: 'a' };
-    };
-    let mailSent = false;
-    mail.send = function (email, message) {
-      mailSent = true;
-    };
+    /** Explaination of mock functions */
+    //const mockFunction = jest.fn();
+    //mockFunction.mockReturnValue(1);
+    //mockFunction.mockResolvedValue(1);
+    //mockFunction.mockRejectedValue(new Error('...'));
+    // const result = mockFunction();
+    /** Explaination of mock functions ends*/
+    db.getCustomerSync = jest.fn().mockReturnValue({email: 'a'});
+    // db.getCustomerSync = function () {
+    //   return { email: 'a' };
+    // };
+    mail.send = jest.fn();
+    // let mailSent = false;
+    // mail.send = function (email, message) {
+    //   mailSent = true;
+    // };
     lib.notifyCustomer({ customerId: 1 });
-    expect(mailSent).toBe(true);
+    expect(mail.send).toHaveBeenCalled();
   });
 });
