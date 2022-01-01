@@ -54,8 +54,26 @@ describe('getProduct', () => {
     // For exact matches
     //expect(result).toEqual({ id: 1, price: 10 });
     // For bigger objects - will pass as long as it contains the two properties
-    expect(result).toMatchObject({ id: 1, price: 10});
+    expect(result).toMatchObject({ id: 1, price: 10 });
     // to have particulat properties
     expect(result).toHaveProperty('id', 1);
+  });
+});
+
+describe('registerUser', () => {
+  it('-should throw if username is falsy', () => {
+    // null, undefined, Nan, '', 0,  false are considered to be falsy values
+    const args = [null, undefined, NaN, '', 0, false];
+    args.forEach((a) => {
+      expect(() => {
+        lib.registerUser(a);
+      }).toThrow();
+    });
+  });
+  // Happy path
+  it('-should return a user object if valid username is passed', () => {
+    const result = lib.registerUser('Shashwat');
+    expect(result).toMatchObject({ username: 'Shashwat' });
+    expect(result.id).toBeGreaterThan(0);
   });
 });
