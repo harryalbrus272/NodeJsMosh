@@ -80,3 +80,5 @@ Test Pyramid gives you 3 recommendation -
 1. Favour unit test over other tests.
 2. Cover unit test gaps with integration tests.
 3. Use E2E tests sparingly.
+
+Frameworks - Mocha[Chai, Sinon], Jasmine, Jest testing libraries. Focus the fundamentals not the tooling
