@@ -12,41 +12,14 @@ const error = require('./middleware/error');
 const log = require('./middleware/logger');
 //monkey-patch all the async route handlers
 require('express-async-errors');
-//Logger for logging out errors
-const winston = require('winston');
-require('winston-mongodb');
 const config = require('config');
 /** The name space is passed in the environment variables. You can use the wildcard a app.* to select the namespace */
 const startDebugger = require('debug')('app:startup'); //arbitary name space in the argument
 const dbDebugger = require('debug')('app:db');
+require('./startup/logging')();
 require('./startup/db')();
 
-winston.add(
-  new winston.transports.File({
-    filename: 'logfile.log',
-    handleExceptions: true,
-    handleRejections: true,
-  }),
-);
-winston.add(
-  new winston.transports.MongoDB({
-    db: 'mongodb://localhost/vidly',
-    handleExceptions: true,
-    handleRejections: true,
-  }),
-);
-
 const app = express();
-
-// process.on('uncaughtException', (err) => {
-//   winston.error(err.message, err);
-//   process.exit(1);
-// });
-
-// process.on('unhandledRejection', (err) => {
-//   winston.error(err.message, err);
-//   process.exit(1);
-// });
 
 //express.json middleware
 app.use(express.json());
