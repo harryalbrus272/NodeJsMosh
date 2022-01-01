@@ -74,3 +74,9 @@ Types of tests -
 1. Unit tests - Test a unit of an applications without its external dependencies. Cheap to write and they execute fast. Can't get a lot of confidence.
 2. Integration tests - Test a few unit of an applications with its external dependencies. Files, databases, etc. Take longer to execute. Give more confidence.
 3. End-to-end tests - Drives an applications through its UI. Most amount of confidence. Very slow. Very brittle. Selenium is one of the products.
+
+Test Pyramid- Most tests in the unit test. Bunch of integration test. Few end-to-end test to key function of the applications. NO EDGE CASES with E2.
+Test Pyramid gives you 3 recommendation -
+1. Favour unit test over other tests.
+2. Cover unit test gaps with integration tests.
+3. Use E2E tests sparingly.
