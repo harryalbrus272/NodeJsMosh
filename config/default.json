@@ -2,6 +2,7 @@
   "name": "My Express File",
   "db": "mongodb://localhost/vidly",
   "mail": {
-    "host": "mail-server"
+    "host": "mail-server",
+    "password": "somepassword"
   }
 }

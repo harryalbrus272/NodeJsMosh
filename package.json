@@ -7,7 +7,7 @@
     "test": "jest --watchAll --verbose",
     "start": "NODE_ENV=production app_password=1234 DEBUG=app:* node index.js",
     "dev": "NODE_ENV=development app_password=1234 DEBUG=app.startup,app:db nodemon index.js",
-    "testing": "NODE_ENV=test app_password=123 nodemon index.js",
+    "testing": "NODE_ENV=test app_password=1234 nodemon index.js",
     "format": "prettier --write ."
   },
   "keywords": [],
@@ -29,6 +29,7 @@
     "mongoose": "^6.1.1",
     "morgan": "^1.10.0",
     "pug": "^3.0.2",
+    "supertest": "^6.1.6",
     "underscore": "^1.13.1",
     "winston": "^3.3.3",
     "winston-mongodb": "^5.0.7"

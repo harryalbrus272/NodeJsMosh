@@ -48,7 +48,6 @@ if (app.get('env') === 'development' || 'test') {
 
 dbDebugger('Connected to the Database');
 
-
 app.use(log);
 require('dotenv').config();
 const PORT = process.env.PORT;
@@ -59,6 +58,8 @@ app.set('views', './views');
 
 console.log(PORT);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
+
+module.exports = server;
