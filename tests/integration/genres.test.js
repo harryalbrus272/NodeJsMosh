@@ -47,14 +47,15 @@ describe('/api/genres', () => {
       expect(res.status).toBe(401);
     });
     it('-should return a 400 if client is less than 5 characters', async () => {
-        const token = new User().generateAuthToken();
-        console.log('token', token);
-        const res = await request(server)
-          .post('/api/genres/')
-          .set('x-auth-token', token)
-          .send({ name: 'g' });
-  
-        expect(res.status).toBe(400);
-      });
+      const token = new User().generateAuthToken();
+      const name = new Array(52).join('a');
+      console.log('token', token);
+      const res = await request(server)
+        .post('/api/genres/')
+        .set('x-auth-token', token)
+        .send({ name });
+
+      expect(res.status).toBe(400);
+    });
   });
 });
