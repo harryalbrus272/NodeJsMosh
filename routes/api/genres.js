@@ -4,8 +4,7 @@ const Joi = require('joi');
 const auth = require('../../middleware/auth');
 const checkAdmin = require('../../middleware/admin');
 const { Genre } = require('../../models/index');
-const mongoose = require('mongoose');
-
+const validateObjectId = require('../../middleware/validateObjectId');
 const schema = Joi.object({
   name: Joi.string().required(),
 });
@@ -63,9 +62,7 @@ router.delete('/:id', auth, checkAdmin, async (req, res) => {
 
 //Route parameter
 /** Query string params are also used using req.query  */
-router.get('/:id', async (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id))
-    return res.status(404).send('Invalid Id');
+router.get('/:id', validateObjectId, async (req, res) => {
   //res.send(req.params.id, req.params.year);
   const genre = await Genre.findById(req.params.id);
   if (!genre) return res.status(404).send('The genre not found');
