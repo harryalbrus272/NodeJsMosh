@@ -49,7 +49,6 @@ describe('/api/genres', () => {
     it('-should return a 400 if client is less than 5 characters', async () => {
       const token = new User().generateAuthToken();
       const name = new Array(52).join('a');
-      console.log('token', token);
       const res = await request(server)
         .post('/api/genres/')
         .set('x-auth-token', token)
@@ -58,15 +57,23 @@ describe('/api/genres', () => {
       expect(res.status).toBe(400);
     });
     it('-should return a 200 if client is valid', async () => {
-        const token = new User().generateAuthToken();
-        console.log('token', token);
-        const res = await request(server)
-          .post('/api/genres/')
-          .set('x-auth-token', token)
-          .send({ name: 'genres1' });
-        const genre = await Genre.find({name: 'genres1'});
-  
-        expect(genre).not.toBeNull();
-      });
+      const token = new User().generateAuthToken();
+      const res = await request(server)
+        .post('/api/genres/')
+        .set('x-auth-token', token)
+        .send({ name: 'genres1' });
+      const genre = await Genre.find({ name: 'genres1' });
+
+      expect(genre).not.toBeNull();
+    });
+    it('-should return the genre if client is valid', async () => {
+      const token = new User().generateAuthToken();
+      const res = await request(server)
+        .post('/api/genres/')
+        .set('x-auth-token', token)
+        .send({ name: 'genres1' });
+      expect(res.body).toHaveProperty('_id');
+      expect(res.body).toHaveProperty('name', 'genres1');
+    });
   });
 });
