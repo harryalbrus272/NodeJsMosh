@@ -41,13 +41,12 @@ console.log('Mail Password: ', config.get('mail.password'));
 console.log(`Node environment: ${process.env.NODE_ENV}`); //development, testing, staging and production
 console.log(`Environment in which the app is running: ${app.get('env')}`);
 /** Middleware functions are called in order they are passed to the app */
-if (app.get('env') === 'development') {
+if (app.get('env') === 'development' || 'test') {
   app.use(morgan('tiny'));
   startDebugger('Morgan logging');
 }
 
 dbDebugger('Connected to the Database');
-
 
 app.use(log);
 require('dotenv').config();
@@ -59,6 +58,8 @@ app.set('views', './views');
 
 console.log(PORT);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
+
+module.exports = server;
