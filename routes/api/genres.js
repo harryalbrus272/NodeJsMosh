@@ -6,7 +6,7 @@ const checkAdmin = require('../../middleware/admin');
 const { Genre } = require('../../models/index');
 const validateObjectId = require('../../middleware/validateObjectId');
 const schema = Joi.object({
-  name: Joi.string().required(),
+  name: Joi.string().min(5).max(50).required(),
 });
 
 const genres = [
