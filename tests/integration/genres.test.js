@@ -57,5 +57,16 @@ describe('/api/genres', () => {
 
       expect(res.status).toBe(400);
     });
+    it('-should return a 200 if client is valid', async () => {
+        const token = new User().generateAuthToken();
+        console.log('token', token);
+        const res = await request(server)
+          .post('/api/genres/')
+          .set('x-auth-token', token)
+          .send({ name: 'genres1' });
+        const genre = await Genre.find({name: 'genres1'});
+  
+        expect(genre).not.toBeNull();
+      });
   });
 });
