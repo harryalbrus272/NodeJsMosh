@@ -16,7 +16,7 @@ describe('auth middleware', () => {
     return request(server)
       .post('/api/genres/')
       .set('x-auth-token', token)
-      .send({ name: 'genre1' });
+      .send({ name: 'genrex1' });
   };
 
   beforeEach(() => {
