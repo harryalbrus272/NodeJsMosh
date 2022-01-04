@@ -82,3 +82,18 @@ Test Pyramid gives you 3 recommendation -
 3. Use E2E tests sparingly.
 
 Frameworks - Mocha[Chai, Sinon], Jasmine, Jest testing libraries. Focus the fundamentals not the tooling
+
+TDD - Test Driven Development
+With TDD, you write your tests before writing the production code.
+Steps -
+    1. Write the failing tests
+    2. Write the simplest code to make the test pass.
+    3. Refractor your code if necessary
+Repeat the steps until you complete the feature
+
+Benefits of TDD - 
+    1. Testable source code
+    2. Full coverage by tests.
+    3. Simpler Implementation.
+
+Test first vs code first - In theory TDD is best but the use case may differ in the better one.
