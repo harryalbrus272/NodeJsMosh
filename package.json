@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose",
+    "test": "jest --watchAll --verbose --coverage",
     "start": "NODE_ENV=production app_password=1234 DEBUG=app:* node index.js",
     "dev": "NODE_ENV=development app_password=1234 DEBUG=app.startup,app:db nodemon index.js",
     "testing": "NODE_ENV=test app_password=1234 nodemon index.js",
