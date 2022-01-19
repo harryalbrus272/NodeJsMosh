@@ -8,4 +8,18 @@
 // Return 200 if the valid request
 // Send the return data and the rental fee
 // Increase the stock of the particular movie
- 
+const { Movie, validateMovies } = require('../../models');
+const { Genre } = require('../../models');
+const mongoose = require('mongoose');
+const express = require('express');
+const auth = require('../../middleware/auth');
+const router = express.Router();
+
+router.post('/', async (req, res) => {
+    res.status(401).send('Unauthorized');
+});
+router.post('/returns', async (req, res) => {
+    res.status(401).send('Unauthorized');
+});
+
+module.exports = router;
