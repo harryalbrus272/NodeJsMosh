@@ -7,20 +7,24 @@ describe('/api/genres', () => {
     server = require('../../index');
   });
   afterEach(async () => {
-    server.close();
+    await server.close();
     await Genre.deleteMany({});
   });
   describe('GET /', () => {
+    afterEach(async () => {
+      await server.close();
+      await Genre.deleteMany({});
+    });
     it('-should return all genres', async () => {
       await Genre.collection.insertMany([
-        { name: 'genre11' },
-        { name: 'genre22' },
+        { name: 'genre11a' },
+        { name: 'genre22a' },
       ]);
       const res = await request(server).get('/api/genres');
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(2);
-      expect(res.body.some((g) => g.name === 'genre11')).toBeTruthy();
-      expect(res.body.some((g) => g.name === 'genre22')).toBeTruthy();
+      expect(res.body.some((g) => g.name === 'genre11a')).toBeTruthy();
+      expect(res.body.some((g) => g.name === 'genre22a')).toBeTruthy();
     });
   });
   describe('GET/:id', () => {
