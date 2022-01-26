@@ -16,10 +16,10 @@ const auth = require('../../middleware/auth');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    res.status(401).send('Unauthorized');
-});
-router.post('/returns', async (req, res) => {
-    res.status(401).send('Unauthorized');
+  if (!req.body.customerId)
+    return res.status(400).send('CustomerId not provided');
+  if (!req.body.movieId) return res.status(400).send('MovieId not provided');
+  res.status(401).send('Unauthorized');
 });
 
 module.exports = router;
