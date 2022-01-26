@@ -59,4 +59,9 @@ describe('/api/returns', () => {
     const res = await exec();
     expect(res.status).toBe(400);
   });
+  it('-should return 400 if the movieId is not provided', async () => {
+    await Rental.deleteMany({});
+    const res = await exec();
+    expect(res.status).toBe(404);
+  });
 });
