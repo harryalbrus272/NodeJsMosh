@@ -1,6 +1,7 @@
 const request = require('supertest');
 const { Rental, User } = require('../../models/index');
 const mongoose = require('mongoose');
+const moment = require('moment');
 describe('/api/returns', () => {
   let server;
   let customerId;
@@ -75,9 +76,10 @@ describe('/api/returns', () => {
     expect(res.status).toBe(200);
   });
   it('-should set the returnDate if input is valid', async () => {
+    rental.dateOut = moment().add(-7, 'days').toDate();
+    await rental.save();
     const res = await exec();
     const rentalInDb = await Rental.findById(rental._id);
-    const diff = new Date() - rentalInDb.dateReturned;
-    expect(diff).toBeLessThan(10000);
+    expect(rentalInDb.rentalFee).toBeDefined();
   });
 });
