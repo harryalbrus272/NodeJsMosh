@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { Rental, User } = require('../../models/index');
+const { Rental, User, Movie } = require('../../models/index');
 const mongoose = require('mongoose');
 const moment = require('moment');
 describe('/api/returns', () => {
@@ -8,6 +8,7 @@ describe('/api/returns', () => {
   let movieId;
   let rental;
   let token;
+  let movie;
 
   const exec = () => {
     return request(server)
@@ -21,6 +22,13 @@ describe('/api/returns', () => {
     customerId = new mongoose.Types.ObjectId().toHexString();
     movieId = new mongoose.Types.ObjectId().toHexString();
     token = new User().generateAuthToken();
+    movie = new Movie({
+      _id: movieId,
+      title: 'Make hay while the sun shines',
+      dailyRentalRate: 2,
+      genre: { name: 'Action'},
+      numberInStock: 10
+    });
     rental = new Rental({
       customer: {
         name: 'HarryAlbrus',
