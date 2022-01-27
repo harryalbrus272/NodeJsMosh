@@ -59,9 +59,25 @@ describe('/api/returns', () => {
     const res = await exec();
     expect(res.status).toBe(400);
   });
-  it('-should return 400 if the movieId is not provided', async () => {
+  it('-should return 404 if the rental does not exists', async () => {
     await Rental.deleteMany({});
     const res = await exec();
     expect(res.status).toBe(404);
+  });
+  it('-should return 400 if the return has already processed', async () => {
+    rental.dateReturned = new Date();
+    rental.save();
+    const res = await exec();
+    expect(res.status).toBe(400);
+  });
+  it('-should return 200 if we have a valid request', async () => {
+    const res = await exec();
+    expect(res.status).toBe(200);
+  });
+  it('-should set the returnDate if input is valid', async () => {
+    const res = await exec();
+    const rentalInDb = await Rental.findById(rental._id);
+    const diff = new Date() - rentalInDb.dateReturned;
+    expect(diff).toBeLessThan(10000);
   });
 });
