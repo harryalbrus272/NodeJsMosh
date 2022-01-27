@@ -8,18 +8,36 @@
 // Return 200 if the valid request
 // Send the return data and the rental fee
 // Increase the stock of the particular movie
-const { Movie, validateMovies } = require('../../models');
+const { Movie, validateMovies, Rental } = require('../../models');
 const { Genre } = require('../../models');
 const mongoose = require('mongoose');
 const express = require('express');
 const auth = require('../../middleware/auth');
 const router = express.Router();
+const moment = require('moment');
 
-router.post('/', async (req, res) => {
-    res.status(401).send('Unauthorized');
-});
-router.post('/returns', async (req, res) => {
-    res.status(401).send('Unauthorized');
+router.post('/', auth, async (req, res) => {
+  try {
+    const { movieId, customerId } = req.body;
+    if (!customerId) return res.status(400).send('CustomerId not provided');
+    if (!movieId) return res.status(400).send('MovieId not provided');
+    console.log(movieId, customerId);
+    const rental = await Rental.findOne({
+      'movie._id': movieId,
+      'customer._id': customerId,
+    });
+    console.log('rental', rental);
+    if (!rental) return res.status(404).send('Rental not found');
+    if (rental.dateReturned)
+      return res.status(400).send('Return already processed');
+    rental.dateReturned = new Date();
+    const rentalDays = moment().diff(rental.dateOut, 'days');
+    rental.rentalFee = rentalDays * rental.movie.dailyRentalRate;
+    await rental.save();
+    return res.status(200).send('Request processed');
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;
