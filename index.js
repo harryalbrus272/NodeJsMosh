@@ -30,7 +30,7 @@ app.use(express.static('public'));
 //Custom middleware function
 
 //Third -party middlewares
-app.use(helmet());
+require('./startup/prod')(app);
 app.use('/', require('./routes'));
 //Error middleware in-built provided by express
 app.use(error);
