@@ -1,6 +1,7 @@
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 const mongoose = require('mongoose');
 const genreSchema = new mongoose.Schema({
@@ -118,6 +119,13 @@ rentalSchema.statics.lookup = function (customerId, movieId) {
     'movie._id': movieId,
     'customer._id': customerId,
   });
+};
+
+rentalSchema.methods.return = function () {
+  this.dateReturned = new Date();
+
+  const rentalDays = moment().diff(this.dateOut, 'days');
+  this.rentalFee = rentalDays * this.movie.dailyRentalRate;
 };
 
 const Rental = mongoose.model('Rental', rentalSchema);

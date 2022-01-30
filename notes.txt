@@ -100,4 +100,5 @@ Test first vs code first - In theory TDD is best but the use case may differ in 
 
 The object oriented programming is of two types - 
 1. Static - When the output is same. Rental.lookup
-2. Instance - result dependent on the object. new User().generateAuthToken()
+2. Instance - result dependent on the object. 
+--- Ending the course without deployment ---
