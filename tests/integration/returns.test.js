@@ -24,11 +24,12 @@ describe('/api/returns', () => {
     token = new User().generateAuthToken();
     movie = new Movie({
       _id: movieId,
-      title: 'Make hay while the sun shines',
+      title: 'Movie Title',
       dailyRentalRate: 2,
-      genre: { name: 'Action'},
-      numberInStock: 10
+      genre: { name: 'Action' },
+      numberInStock: 10,
     });
+    await movie.save();
     rental = new Rental({
       customer: {
         name: 'HarryAlbrus',
@@ -46,6 +47,7 @@ describe('/api/returns', () => {
 
   afterEach(async () => {
     await Rental.deleteMany({});
+    await Movie.deleteMany({});
     await server.close();
   });
 
@@ -89,5 +91,29 @@ describe('/api/returns', () => {
     const res = await exec();
     const rentalInDb = await Rental.findById(rental._id);
     expect(rentalInDb.rentalFee).toBeDefined();
+  });
+  it('-should increase the movie stock', async () => {
+    const res = await exec();
+    const movieInDb = await Movie.findById(movieId);
+    expect(movieInDb.numberInStock).toBe(movie.numberInStock + 1);
+  });
+  it('-should return if the input is valid', async () => {
+    const res = await exec();
+    const rentalInDb = await Rental.findById(rental._id);
+    expect(res.body.rental).toHaveProperty('dateOut');
+    expect(res.body.rental).toHaveProperty('dateReturned');
+    expect(res.body.rental).toHaveProperty('rentalFee');
+    expect(res.body.rental).toHaveProperty('customer');
+    expect(res.body.rental).toHaveProperty('movie');
+
+    expect(Object.keys(res.body.rental)).toEqual(
+      expect.arrayContaining([
+        'dateOut',
+        'dateReturned',
+        'rentalFee',
+        'customer',
+        'movie',
+      ]),
+    );
   });
 });
