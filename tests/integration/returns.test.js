@@ -47,6 +47,7 @@ describe('/api/returns', () => {
 
   afterEach(async () => {
     await Rental.deleteMany({});
+    await Movie.deleteMany({});
     await server.close();
   });
 
