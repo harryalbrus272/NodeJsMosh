@@ -18,14 +18,7 @@ const express = require('express');
 const auth = require('../../middleware/auth');
 const router = express.Router();
 const moment = require('moment');
-
-const validate = (validator) => {
-  return (req, res, next) => {
-    const { error } = validator(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    next()
-  };
-};
+const validate = require('../../middleware/validate');
 
 router.post('/', [auth, validate(validateRental)], async (req, res) => {
   try {
