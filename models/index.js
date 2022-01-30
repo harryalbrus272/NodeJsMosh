@@ -1,6 +1,7 @@
 const Joi = require('joi');
-const jwt = require('jsonwebtoken');
 Joi.objectId = require('joi-objectid')(Joi);
+const jwt = require('jsonwebtoken');
+
 const mongoose = require('mongoose');
 const genreSchema = new mongoose.Schema({
   name: {
